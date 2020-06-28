@@ -1,0 +1,22 @@
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.Header{
+    height: 10vh;
+    flex-shrink: 0;
+}
+.Main{
+    padding-left: 10vw;
+    padding-right: 10vw;
+    flex-grow: 1;
+}
+.Footer{
+    height: 10vh;
+    flex-shrink: 0;
+}
+
+#editor{
+    margin-top: 20px;
+}

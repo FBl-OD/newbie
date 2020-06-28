@@ -1,0 +1,40 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="/css/header.css">
+    <link rel="stylesheet" th:href="/css/footer.css">
+    <link rel="stylesheet" th:href="/css/index.css">
+    <title>菜鸟论坛-首页</title>
+</head>
+<body>
+    <div class="Header" th:fragment="header">
+        <a class="HeaderPart">
+            首页
+        </a>
+        <a class="HeaderPart">
+            论坛
+        </a>
+        <a class="HeaderPart">
+            博客
+        </a>
+        <div class="Space"></div>
+        <div class="HeaderInput input-group">
+            <input type="text" class="form-control">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">搜索</button>
+            </span>
+        </div>
+        <button class="HeaderButton btn btn-default">注册</button>
+        <button class="HeaderButton btn btn-default">登录</button>
+    </div>
+    <div class="Main">
+        
+    </div>
+    <div class="Footer">
+
+    </div>
+</body>
+</html>
