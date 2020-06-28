@@ -12,8 +12,6 @@ public class Blog {
 
     String content;
 
-    Integer tagId;
-
     Integer catgoryId;
 
     //状态：0-正常，1-删除
@@ -54,14 +52,6 @@ public class Blog {
         this.content = content;
     }
 
-    public Integer getTagId() {
-        return tagId;
-    }
-
-    public void setTagId(Integer tagId) {
-        this.tagId = tagId;
-    }
-
     public Integer getCatgoryId() {
         return catgoryId;
     }
@@ -93,7 +83,6 @@ public class Blog {
                 ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", tagId=" + tagId +
                 ", catgoryId=" + catgoryId +
                 ", status=" + status +
                 ", createTime=" + createTime +

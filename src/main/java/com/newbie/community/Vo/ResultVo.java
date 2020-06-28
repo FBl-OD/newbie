@@ -1,12 +1,20 @@
 package com.newbie.community.Vo;
 
-public class ResultVo<T> {
+import java.util.Map;
 
+/**
+ * 用于封装异步请求的结果
+ */
+public class ResultVo {
+
+    //状态码
     private int code;
 
+    //状态消息
     private String msg;
 
-    private T data;
+    //返回数据
+    private Map<String,Object> data;
 
     public int getCode() {
         return code;
@@ -24,11 +32,11 @@ public class ResultVo<T> {
         this.msg = msg;
     }
 
-    public T getData() {
+    public Map<String, Object> getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(Map<String, Object> data) {
         this.data = data;
     }
 }

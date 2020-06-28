@@ -1,0 +1,35 @@
+.Header{
+    display:flex;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    align-items: center;
+
+    background-color: #343a40;
+}
+.HeaderPart{
+    color:rgba(255,255,255,.5);
+    cursor: pointer;
+    font-size: 16px;
+
+    display: block;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+.HeaderPart:hover{
+    color: white;
+    text-decoration: none;
+}
+.Space{
+    flex-grow: 1;
+}
+.HeaderInput{
+    width: 20%;
+    margin-left: 1em;
+    margin-right: 4em;
+}
+.HeaderButton{
+    color:white;
+    background-color: #343a40;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
