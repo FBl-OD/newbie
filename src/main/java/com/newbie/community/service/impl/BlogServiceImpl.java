@@ -35,6 +35,11 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public int queryCount(int userId) {
+        return blogDao.selectCount(userId);
+    }
+
+    @Override
     public int add(Blog blog) {
         return blogDao.insert(blog);
     }
@@ -42,5 +47,15 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public int updateStatus(int id, int status) {
         return blogDao.updateStatus(id, status);
+    }
+
+    @Override
+    public int updateBlogById(int id, Blog blog) {
+        return blogDao.updateById(id, blog);
+    }
+
+    @Override
+    public int queryCountOfSpecifiedCategory(int categoryId) {
+        return blogDao.selectCountOfSpecifiedCategory(categoryId);
     }
 }

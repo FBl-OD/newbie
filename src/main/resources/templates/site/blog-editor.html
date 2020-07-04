@@ -1,48 +1,81 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <meta charset="utf-8">
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
-    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/blogupload.css}">
-    <title>菜鸟论坛-编写博客</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/lib/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/lib/editormd/css/editormd.css}"/>
+    <link rel="stylesheet" th:href="@{/css/editor.css}"/>
+    <title>编辑文章_菜鸟社区</title>
 </head>
 <body>
+<div class="EditorTop">
+    <input maxlength="15" type="text" autocomplete="off" id="title" placeholder="文章标题"
+           th:value="${blog}==null?'':${blog.title}"/>
+    <input type="hidden" id="id" th:value="${blog}==null?'-1':${blog.id}"/>
+    <div class="EditorTopPart dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true">
+            选择分类
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li th:each="cat:${catgories}"><a onclick="TypeChange(event)" href="#"  th:id="${cat.id}"
+                   th:text="${cat.name}">前端</a></li>
+        </ul>
+    </div>
+    <button class="EditorTopPart btn btn-primary" onclick="submit()">发布</button>
+    <a th:href="@{|/user/console/${user.id}|}" class="EditorTopLink" title="个人中心"><img class="EditorTopImg" th:src="@{${user.headerUrl}}"/></a>
+</div>
 
-    <div class="Main">
-        <input type="text" id="title" placeholder="请填写文章标题" />
-        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-        <div id="editor"></div>
-        <input type="button" value="发布" onclick="upload()" />
-        <script>
-        const Editor = toastui.Editor;
-        const editor = new Editor({
-            el: document.querySelector('#editor'),
-            height: '50vh',
-            initialEditType: 'markdown',
-            previewStyle: 'vertical',
-            initialValue:''
+<div id="test-editor">
+    <textarea style="display:none;" th:utext="${blog}==null?'':${blog.content}"></textarea>
+</div>
+
+<script th:src="@{/lib/jquery/jquery.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
+<script th:src="@{/lib/editormd/editormd.min.js}"></script>
+<script type="text/javascript">
+    let editor;
+    let category;
+    $(function () {
+        editor = editormd("test-editor", {
+            imageUpload: true,
+            imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+            imageUploadURL: "/image",
+            saveHTMLToTextarea: true,
+            taskList: true,
+            tocm: true,
+            tex: true,
+            searchReplace: true,
+            emoji: true,
+            width: "100%",
+            height: 650,
+            path: "/lib/editormd/lib/"
         });
+    });
 
-        function upload(){
-            $.post('/blog',{
-                "title":$("#title").val(),
-                "content":editor.getMarkdown()
+    function TypeChange(event){
+        document.getElementById('dropdownMenu1').innerHTML=event.target.innerText+'<span class="caret"></span>';
+        category=event.target.id;
+    }
+
+    function submit() {
+        $.post("/blog", {
+                id: $("#id").val(),
+                title: $("#title").val(),
+                catgory: category,
+                content: editor.getMarkdown(),
+                html: editor.getHTML()
             },
-            function(data){
-                if(data&&data['msg'])
+            function (data) {
+                if (data && data['msg'])
                     alert(data['msg']);
-            })
-        }
-        </script>
-    </div>
-    <div class="Footer">
-
-    </div>
+                if (data['data']['url'])
+                    window.location.href = data['data']['url'];
+            });
+    }
+</script>
 </body>
 </html>

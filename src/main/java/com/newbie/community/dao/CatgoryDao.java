@@ -15,6 +15,9 @@ public interface CatgoryDao {
 
     List<Catgory> selectByUserId(int userId);
 
+    @Deprecated
+    Catgory selectUserDefault(@Param("userId") int userId, @Param("name") String name);
+
     int insert(Catgory catgory);
 
     int updateStatus(@Param("id") int id, @Param("status") int status);

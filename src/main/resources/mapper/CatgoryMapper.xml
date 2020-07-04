@@ -18,9 +18,16 @@
         where user_id=#{userId}
         and status!=1
     </select>
+    <select id="selectUserDefault" resultType="Catgory">
+        select <include refid="selectFields"></include>
+        from catgory
+        where user_id=#{userId}
+        and name=#{name}
+        and status!=1
+    </select>
     <insert id="insert" parameterType="Catgory" keyProperty="id">
         insert into catgory(user_id,name,status,create_time)
-        values (#{userId},#{name},#{status},#{create_time})
+        values (#{userId},#{name},#{status},#{createTime})
     </insert>
     <update id="updateStatus">
         update tag

@@ -12,6 +12,8 @@ public class Blog {
 
     String content;
 
+    String html;
+
     Integer catgoryId;
 
     //状态：0-正常，1-删除
@@ -52,6 +54,14 @@ public class Blog {
         this.content = content;
     }
 
+    public String getHtml() {
+        return html;
+    }
+
+    public void setHtml(String html) {
+        this.html = html;
+    }
+
     public Integer getCatgoryId() {
         return catgoryId;
     }
@@ -83,6 +93,7 @@ public class Blog {
                 ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", html='" + html + '\'' +
                 ", catgoryId=" + catgoryId +
                 ", status=" + status +
                 ", createTime=" + createTime +

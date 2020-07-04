@@ -1,5 +1,6 @@
 package com.newbie.community.util;
 
+@Deprecated
 public interface CommunityConst {
     /**
      * 响应状态码

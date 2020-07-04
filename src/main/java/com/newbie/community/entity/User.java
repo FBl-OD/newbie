@@ -19,7 +19,7 @@ public class User {
     //用户类型：0-普通用户，1-管理员
     Integer type;
 
-    //用户状态：0-未激活状态，1-正常状态
+    //用户状态：0-正常，1-注销
     Integer status;
 
     Date createTime;
