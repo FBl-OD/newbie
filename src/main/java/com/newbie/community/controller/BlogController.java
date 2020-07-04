@@ -4,9 +4,8 @@ import com.newbie.community.Vo.ResultVo;
 import com.newbie.community.entity.Blog;
 import com.newbie.community.entity.Catgory;
 import com.newbie.community.entity.User;
-import com.newbie.community.service.BlogService;
-import com.newbie.community.service.CatgoryService;
-import com.newbie.community.service.UserService;
+import com.newbie.community.service.*;
+import com.newbie.community.util.CommunityConst;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @Controller
-public class BlogController {
+public class BlogController implements CommunityConst {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageController.class);
 
@@ -31,10 +30,15 @@ public class BlogController {
     @Autowired
     private CatgoryService catgoryService;
 
-    //TBD:校验登录
+    @Autowired
+    private LikeService likeService;
+
+    @Autowired
+    private ViewService viewService;
+
 
     /**
-     * 返回文章编辑试图
+     * 返回文章编辑视图
      *
      * @param model
      * @return
@@ -98,11 +102,18 @@ public class BlogController {
                 categories.add(map);
             }
         }
+        //如果登录的话
+        boolean liked = likeService.isLike(101, BLOG_TYPE, blog.getId());
+        model.addAttribute("liked",liked);
+        viewService.increment(id);
+        model.addAttribute("views",viewService.views(id));
+        model.addAttribute("likes",likeService.numOfLike(BLOG_TYPE,blog.getId()));
         model.addAttribute("blog", blog);
         model.addAttribute("user", user);
         model.addAttribute("owner", true);
         model.addAttribute("articles", articles);
         model.addAttribute("categories",categories);
+
 
         return "/site/blog-detail";
     }
@@ -156,9 +167,9 @@ public class BlogController {
                 map.put("url", "/blog/detail/" + id);
             } else {//执行插入
                 blogService.add(blog);
+                viewService.init(blog.getId());
                 map.put("url", "/blog/detail/" + blog.getId());
             }
-
             resultVo.setCode(1);
             resultVo.setMsg("文章发布成功");
             resultVo.setData(map);

@@ -20,11 +20,10 @@
         <a class="HeaderPart" th:href="@{/blog/editor}">
             写文章
         </a>
-        <!--th:if="${loginUser!=null}"-->
-        <a th:href="@{/register}" th:if="${loginUser!=null}" class="HeaderPart">
+        <a th:href="@{/register}" class="HeaderPart">
             注册
         </a>
-        <a th:href="@{/login}" th:if="${loginUser!=null}" class="HeaderPart">
+        <a th:href="@{/login}" class="HeaderPart">
             登录
         </a>
         <div class="HeaderPart dropdown">
@@ -60,12 +59,12 @@
                         </div>
                         <div class="MainArticleInfoGroupPart">
                             <img th:src="@{/img/read.svg}" style="margin-right: 0.25em;">
-                            1
+                            <span th:text="${obj.views}"></span>
                         </div>
                         <div class="MainArticleInfoGroupPart">
-                            <img th:src="@{/img/favorite.svg}" style="margin-right: 0.25em;">
+<!--                            <img th:src="@{/img/favorite.svg}" style="margin-right: 0.25em;">-->
                             <img th:src="@{/img/favorite_border.svg}" style="margin-right: 0.25em;">
-                            1
+                            <span th:text="${obj.likes}">1</span>
                         </div>
                         <div class="MainArticleInfoGroupPart">
                             <img th:src="@{/img/tag.svg}" style="margin-right: 0.25em;">
