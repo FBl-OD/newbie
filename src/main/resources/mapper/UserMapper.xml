@@ -37,4 +37,14 @@
     where id=#{id}
     </update>
 
+    <delete id="deleteUserById">
+        delete from user
+        where id =#{id}
+    </delete>
+
+    <select id="isNullByName" resultType="int">
+        select count(id)
+        from user
+        where name=#{name}
+    </select>
 </mapper>
