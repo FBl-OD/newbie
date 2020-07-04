@@ -53,4 +53,14 @@ public class IndexController {
         model.addAttribute("categories",catgories);
         return "index";
     }
+
+    @RequestMapping(path = "/login",method = RequestMethod.GET)
+    public String getLoginPage(){
+        return "/site/login";
+    }
+
+    @RequestMapping(path = "/register",method = RequestMethod.GET)
+    public String getRegisterPage(){
+        return "/site/register";
+    }
 }

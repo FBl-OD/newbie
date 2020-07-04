@@ -58,10 +58,10 @@ public class ImageController {
             return map;
         }
         fileName = CommunityUtil.generateUUID();
-        File dest = new File(uploadPath + "/" + fileName + suffix);
+        File dest = new File(uploadPath + "/" + fileName);
         map.put("success",1);
         map.put("message","图片上传成功");
-        map.put("url", "/image/" + fileName + suffix);
+        map.put("url", "/image/" + fileName);
         try {
             image.transferTo(dest);
         } catch (IOException e) {
@@ -77,9 +77,8 @@ public class ImageController {
 
     @RequestMapping(path = "/image/{fileName}", method = RequestMethod.GET)
     public void downloadImage(@PathVariable("fileName") String fileName, HttpServletResponse response) {
-        String suffix = fileName.substring(fileName.lastIndexOf("."));
+        //System.out.println(fileName);
         fileName = uploadPath + "/" + fileName;
-        response.setContentType("image/" + suffix);
         try (
                 FileInputStream fis = new FileInputStream(fileName);
                 OutputStream os = response.getOutputStream();

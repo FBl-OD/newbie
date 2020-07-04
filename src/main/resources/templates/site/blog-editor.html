@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" th:href="@{/lib/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" th:href="@{/lib/editormd/css/editormd.css}"/>
     <link rel="stylesheet" th:href="@{/css/editor.css}"/>
     <title>编辑文章_菜鸟社区</title>
 </head>
 <body>
 <div class="EditorTop">
-    <input maxlength="15" type="text" autocomplete="off" id="title" placeholder="文章标题"
+    <input class="my-input" maxlength="15" type="text" autocomplete="off" id="title" placeholder="文章标题"
            th:value="${blog}==null?'':${blog.title}"/>
     <input type="hidden" id="id" th:value="${blog}==null?'-1':${blog.id}"/>
     <div class="EditorTopPart dropdown">
@@ -32,9 +32,9 @@
     <textarea style="display:none;" th:utext="${blog}==null?'':${blog.content}"></textarea>
 </div>
 
-<script th:src="@{/lib/jquery/jquery.js}"></script>
+<script th:src="@{/js/jquery.js}"></script>
 <script th:src="@{/js/popper.min.js}"></script>
-<script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
 <script th:src="@{/lib/editormd/editormd.min.js}"></script>
 <script type="text/javascript">
     let editor;

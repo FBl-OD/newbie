@@ -1,9 +1,9 @@
-input{
+.my-input{
     border: none;
     font-size: 30px;
     font-weight: bold;
 }
-input:focus{
+.my-input:focus{
     border: none;
     box-shadow: none;
 }

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <title>菜鸟社区-注册</title>
+</head>
+<body>
+    <!--内容-->
+    <div class="Main">
+        <div class="MainTitle">
+            注册
+        </div>
+
+        <form class="MainForm">
+            <div class="MainFormPart">
+                <label for="inputUsername"
+                    class="MainFormLabel">账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</label>
+                <div class="MainFormInput">
+                    <input type="text" class="form-control" id="inputUsername">
+                </div>
+            </div>
+            <div class="MainFormPart">
+                <label for="inputEmail" class="MainFormLabel">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱</label>
+                <div class="MainFormInput">
+                    <input type="text" class="form-control" id="inputEmail">
+                    <div class="MainError" id="EmailWrong"></div>
+                </div>
+            </div>
+            <div class="MainFormPart">
+                <label for="inputPassword"
+                    class="MainFormLabel">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+                <div class="MainFormInput">
+                    <input type="password" class="form-control" id="inputPassword">
+                </div>
+            </div>
+            <div class="MainFormPart">
+                <label for="confirmPassword" class="MainFormLabel">确认密码</label>
+                <div class="MainFormInput">
+                    <input type="password" class="form-control" id="confirmPassword">
+                </div>
+            </div>
+            <div class="MainFormPart">
+                <label for="confirmCode" class="MainFormLabel">验证码</label>
+                <div class="MainFormInput">
+                    <input type="password" class="form-control" id="confirmCode">
+                </div>
+                <button class="MainCodeButton btn btn-primary">发送验证码</button>
+            </div>
+            <div class="MainFormPart">
+                <button class="MainFormInput btn btn-primary">注册</button>
+            </div>
+        </form>
+
+    </div>
+    <div class="Footer">
+
+    </div>
+    <script>
+
+    </script>
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+body{
+    height: 100vh;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 9fr 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px; 
+}
+.Header{
+    grid-area: 1 / 1 / 2 / 2;
+}
+.Main{
+    grid-area: 2 / 1 / 3 / 2;
+    padding-left: 10vw;
+    padding-right: 10vw;
+}
+.Footer{
+    grid-area: 3 / 1 / 4 / 2;
+}
+
+.Header{
+    display:flex;
+    padding-left: 10vw;
+    padding-right: 10vw;
+    align-items: center;
+
+    background-color: rgba(255,255,255,0.85);
+}
+.HeaderPart{
+    color:#ff6700;
+    cursor: pointer;
+    font-size: 16px;
+
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-left: 2em;
+    padding-right: 2em;
+}
+.HeaderPart:hover{
+    color: #545454;
+    text-decoration: none;
+}
+.HeaderPartDown{
+    color:#ff6700;
+    border: none;
+    font-size: 16px;
+}
+.HeaderPartDown:hover{
+    color: #545454;
+    text-decoration: none;
+    background-color: white;
+}
+.HeaderLogo{
+    cursor: pointer;
+    width: auto;
+    height: 3em;
+}
+.Space{
+    flex-grow: 1;
+}
+
+.MainTitle{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #17a2b8;
+    font-size: 5rem;
+    letter-spacing: 3rem;
+    border-bottom: 1px solid #dee2e6;
+    text-align: center;
+}
+.MainForm{
+    padding-left: 20vw;
+    padding-right: 20vw;
+}
+.MainFormPart{
+    display: flex;
+    align-items: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+.MainFormLabel{
+    width: 5em;
+    text-align: center;
+    margin-right: 2em;
+}
+.MainFormInput{
+    flex-grow: 1;
+}

@@ -15,6 +15,8 @@ public interface BlogDao {
 
     List<Blog> selectAll(@Param("userId") int userId, @Param("offset") int offset, @Param("limit") int limit);
 
+    List<Blog> selectByCategoryId(@Param("categoryId") int categoryId,@Param("offset") int offset,@Param("limit") int limit);
+
     int selectCount(@Param("userId") int userId);
 
     int selectCountOfSpecifiedCategory(@Param("categoryId") int category);

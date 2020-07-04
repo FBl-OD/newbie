@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <title>菜鸟社区</title>
+</head>
+<body>
+<div th:replace="index::header"></div>
+<div class="Main">
+    <div class="MainContent">
+        <div class="MainTitle">
+            <img th:src="@{/img/tag.svg}" style="margin-right: 1em;" th:text="${category.name}">
+        </div>
+        <div class="MainArticle" th:each="obj:${blogs}">
+            <img th:src="@{|/img/${obj.blog.catgoryId}.jpg|}" class="MainArticleImg">
+            <div class="MainArticleInfo">
+                <a class="MainArticleInfoTitle" th:href="@{|/blog/detail/${obj.blog.id}|}" th:text="${obj.blog.title}">
+                    射手的自我修养
+                </a>
+                <div class="MainArticleInfoGroup">
+                    <div class="MainArticleInfoGroupPart" th:text="${#dates.format(obj.blog.createTime,'yyyy-MM-dd HH:mm:ss')}">
+                        <img th:src="@{/img/time.svg}" style="margin-right: 0.25em;">
+                        2020-02-02 11:11:11
+                    </div>
+                    <div class="MainArticleInfoGroupPart">
+                        <img th:src="@{/img/person.svg}" style="margin-right: 0.25em;">
+                        <a class="MainArticleInfoGroupPartLink" th:href="@{|/${obj.user.id}|}" th:text="${obj.user.name}">老王</a>
+                    </div>
+                    <div class="MainArticleInfoGroupPart">
+                        <img th:src="@{/img/read.svg}" style="margin-right: 0.25em;">
+                        1
+                    </div>
+                    <div class="MainArticleInfoGroupPart">
+                        <img th:src="@{/img/favorite.svg}" style="margin-right: 0.25em;">
+                        <img th:src="@{/img/favorite_border.svg}" style="margin-right: 0.25em;">
+                        1
+                    </div>
+                    <div class="MainArticleInfoGroupPart">
+                        <img th:src="@{/img/tag.svg}" style="margin-right: 0.25em;">
+                        <a class="MainArticleInfoGroupPartLink" th:href="@{|/category/${obj.catgory.id}|}" th:text="${obj.catgory.name}">技术</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-2 MainContentPage" th:if="${pageVo.rows>0}" th:fragment="pagination">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" th:href="@{${pageVo.path}(current=1)}">首页</a>
+                </li>
+                <li th:class="|page-item ${pageVo.current==1?'disabled':''}|">
+                    <a class="page-link" th:href="@{${pageVo.path}(current=${pageVo.current-1})}">上一页</a></li>
+                <li th:class="|page-item ${i==pageVo.current?'active':''}|" th:each="i:${#numbers.sequence(pageVo.from,pageVo.to)}">
+                    <a class="page-link" th:href="@{${pageVo.path}(current=${i})}" th:text="${i}">1</a>
+                </li>
+                <li th:class="|page-item ${pageVo.current==pageVo.total?'disabled':''}|">
+                    <a class="page-link" th:href="@{${pageVo.path}(current=${pageVo.current+1})}">下一页</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:href="@{${pageVo.path}(current=${pageVo.total})}">末页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div th:replace="index::category">
+
+    </div>
+</div>
+<script th:src="@{/js/jquery.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+</body>
+
+</html>

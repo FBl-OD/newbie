@@ -22,17 +22,25 @@
         order by create_time desc
         limit #{offset},#{limit}
     </select>
+    <select id="selectByCategoryId" resultType="Blog">
+        select <include refid="selectFields"></include>
+        from blog
+        where status!=1
+        and catgory_id=#{categoryId}
+        order by create_time desc
+        limit #{offset},#{limit}
+    </select>
     <select id="selectCount" resultType="int">
         select count(*) from blog
         where status!=1
         <if test="userId!=0">
-            and userId=#{userId}
+            and user_id=#{userId}
         </if>
     </select>
     <select id="selectCountOfSpecifiedCategory" resultType="int">
         select count(*) from blog
         where status!=1
-        and category_id=#{categoryId}
+        and catgory_id=#{categoryId}
     </select>
     <insert id="insert" parameterType="Blog" keyProperty="id">
         insert into blog(user_id,title,content,html,catgory_id,status,create_time)

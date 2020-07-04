@@ -31,7 +31,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<Blog> queryByCatgoryId(int catgoryId, int offset, int limit) {
-        return null;
+        return blogDao.selectByCategoryId(catgoryId, offset, limit);
     }
 
     @Override

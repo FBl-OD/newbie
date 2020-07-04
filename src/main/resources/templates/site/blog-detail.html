@@ -3,236 +3,74 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" th:href="@{/lib/bootstrap/css/bootstrap.css}">
-    <link rel="stylesheet" th:href="@{/css/main.css}">
-    <link rel="stylesheet" th:href="@{/css/animate.css}">
-    <link rel="stylesheet" th:href="@{/css/font-icon.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/blog-detail.css}">
     <title th:text="|${blog.title}_${user.name}_菜鸟社区|"></title>
-    <style>
-        img{
-            max-width: 100%;
-            max-height: 100%;
-        }
-    </style>
 </head>
-<body>
-<!--导航-->
-<nav class="navbar navbar-expand-lg navbar-light nav-color-nav  navbar-lk text-dark" th:replace="index::nav">
-</nav>
 
-<!--内容-->
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="container">
-                <div class="row mt-2">
-                    <div class="col-md-12 bgc">
-                        <div class="new">
-                            <span th:text="${blog.title}">标题</span>
-                        </div>
-                    </div>
+<body>
+    <div th:replace="index::header">
+    </div>
+    <div class="Main">
+        <div class="MainContent">
+            <div th:text="${blog.title}" class="MainTitle">
+                大王叫我来巡山
+            </div>
+            <div class="MainInfo">
+                <div class="MainInfoPart">
+                    <a class="MainInfoPartLink" th:href="@{|/${user.id}|}" th:text="${user.name}">老王</a>
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-12 bgc">
-                        <div class="article-title">
-                            <ul>
-                                <li class="d-none d-sm-none d-md-none d-lg-block"><a th:href="@{|/${user.id}|}" th:text="${user.name}"><i class="el-user"></i>作者</a></li>
-                                <li><span>&nbsp;发布于：</span></li>
-                                <li><a th:text="${#dates.format(blog.createTime,'yyyy-MM-dd HH:mm:ss')}"><i class="el-time"></i>2020-05-20 13:14:00</a></li>
-                                <li class="pull-right"><a title="已有 2 个赞" ><i class="el-heart"></i>2</a></li>
-                                <li class="pull-right"><a title="已有 1次浏览" ><i class="el-eye-open"></i>1</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                <span>发布于：</span>
+                <div th:text="${#dates.format(blog.createTime,'yyyy-MM-dd HH:mm:ss')}" class="MainInfoPart">
+                    2020-02-02 11:11:11
                 </div>
-                <div class="row mt-2 bgc">
-                    <div class="article-body" th:utext="${blog.html}">
-                    </div>
+                <div class="MainInfoPart">
+                    <img th:src="@{/img/favorite.svg}" style="margin-right: 0.25em;">
+                    <img th:src="@{/img/favorite_border.svg}" style="margin-right: 0.25em;">
+                    1                    
                 </div>
-                <div class="row mt-2">
-                    <div class="col-md-12 bgc">
-                        <div class="new">
-                            <span><i class="el-certificate"></i>相关文章</span>
-                        </div>
+                <div class="MainInfoPart">
+                    <img th:src="@{/img/read.svg}" style="margin-right: 0.25em;">
+                    1                
+                </div>
+            </div>
+            <div th:utext="${blog.html}" class="MainText">
+                11111111111111
+            </div>
+        </div>
+        <div class="MainRight">
+            <div class="MainUser">
+                <img class="MainUserImg" th:src="@{${user.headerUrl}}">
+                <a th:text="${user.name}" class="MainUserName">老王</a>
+                <div class="MainUserInfo">
+                    <div style="border-right: 1px black solid;" class="MainUserInfoPart">
+                        <div th:text="${articles}">2</div>
+                        文章
                     </div>
-                    <div class="container mt-4">
-                        <div class="row">
-                            <div class="col-md-4 bgc mb-4 ">
-                                <div class="card mb-4 box-shadow  mt-4">
-                                    <div class="showimg">
-                                        <img class="card-img-top" style=" width: 100%; display: block;" th:src="@{/static/img/8.jpg}" data-holder-rendered="true">
-                                    </div>
-                                    <div class="card-body">
-                                        <a href="#">测试图文</a>
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <div class="btn-group showtitle">
-                                                <i class="el-time"></i>2019-04-03
-                                            </div>
-                                            <small class="text-muted"><i class="el-fire"></i>9 mins</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div style="border-right: 1px black solid;" class="MainUserInfoPart">
+                        <div>2</div>
+                        阅读
+                    </div>
+                    <div class="MainUserInfoPart">
+                        <div>2</div>
+                        获赞
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!--右边-->
-        <div class="col-md-4">
-            <div class="container">
-
-                <div class="row bgc mt-5 right-author">
-                    <div class="col-md-12 ">
-                        <div class="auth-img">
-                            <img th:src="@{/static/img/logo.png}" alt="">
-                        </div>
-                        <div class="auth-name">
-                            <span th:text="${user.name}">作者</span>
-                        </div>
-                        <div class="auth-info">
-                            <ul>
-                                <li><strong>2</strong><span>文章</span></li>
-                                <li><strong>2</strong><span>获赞</span></li>
-                                <li><strong>2</strong><span>访问</span></li>
-                            </ul>
-                        </div>
-
-                    </div>
+            <div class="MainCategory">
+                <div class="MainCategoryTitle">
+                    <img th:src="@{/img/tag.svg}" style="margin-right: 0.25em;">
+                    Ta写过的分类
                 </div>
-
-                <div class="row bgc mt-5">
-                    <div class="new new-right">
-                        <span><i class="el-tags"></i>标签云</span>
-                    </div>
-                    <div class="col-md-12 ">
-                        <ul class="label">
-                            <li>
-                                <a href="#" title="生活">生活&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="模糊查询">模糊查询&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="遍历二维数组">遍历二维数组&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="Mui">Mui&nbsp;&nbsp;(2)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="随机">随机&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="文章月统计">文章月统计&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="时间戳">时间戳&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="一周每天的数据">一周每天的数据&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="无限极分类">无限极分类&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="tp5">tp5&nbsp;&nbsp;(2)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="面试">面试&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="layui">layui&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="Thinkphp5">Thinkphp5&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="QQ互联">QQ互联&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="惜缘">惜缘&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="发斯蒂芬">发斯蒂芬&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="擦擦">擦擦&nbsp;&nbsp;(3)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="发">发&nbsp;&nbsp;(2)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="测试">测试&nbsp;&nbsp;(5)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="fasdfasd">fasdfasd&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="测试数据2">测试数据2&nbsp;&nbsp;(1)</a>
-
-                            </li>
-
-                            <li>
-                                <a href="#" title="测试数据">测试数据&nbsp;&nbsp;(2)</a>
-
-                            </li>
-
-                        </ul>
+                <div class="MainCategoryContent">
+                    <div class="MainCategoryContentPart" th:each="cat:${categories}">
+                        <span th:text="${cat.category.name}">前端</span><span th:text="${cat.count}">3</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-</div>
-
-
-<script th:src="@{/lib/jquery/jquery.js}"></script>
-<script th:src="@{/lib/bootstrap/js/bootstrap.js}"></script>
-<script th:src="@{/js/wow.js}"></script>
-<script>
-    new WOW().init();
-</script>
 </body>
+
 </html>
