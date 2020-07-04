@@ -11,12 +11,20 @@ import java.util.List;
 @Mapper
 public interface BlogDao {
 
-    Blog selectById(int id);
+    Blog selectById(@Param("id") int id);
 
     List<Blog> selectAll(@Param("userId") int userId, @Param("offset") int offset, @Param("limit") int limit);
 
+    List<Blog> selectByCategoryId(@Param("categoryId") int categoryId,@Param("offset") int offset,@Param("limit") int limit);
+
+    int selectCount(@Param("userId") int userId);
+
+    int selectCountOfSpecifiedCategory(@Param("categoryId") int category);
+
     int insert(Blog blog);
 
-    int updateStatus(@Param("id") int id,@Param("status") int status);
+    int updateStatus(@Param("id") int id, @Param("status") int status);
+
+    int updateById(@Param("id")int id,@Param("blog") Blog blog);
 
 }

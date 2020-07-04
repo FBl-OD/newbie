@@ -10,7 +10,7 @@ CREATE TABLE `user` (
   `salt` varchar(50) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `type` int(11) DEFAULT NULL COMMENT '0-普通用户; 1-管理员',
-  `status` int(11) DEFAULT NULL COMMENT '0-未激活; 1-已激活;',
+  `status` int(11) DEFAULT NULL COMMENT '0-正常; 1-注销',
   `header_url` varchar(200) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -51,13 +51,25 @@ CREATE TABLE `blog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `title` varchar(50) DEFAULT NULL,
-  `content` text,
+  `content` text DEFAULT  NULL,
+  `html` text DEFAULT NULL,
   `catgory_id` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT NULL COMMENT '0-正常; 1-删除;',
   `create_time` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `index_user_id` (`user_id`),
   KEY `index_catgory_id` (`catgory_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `resource`;
+CREATE TABLE `resource` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) DEFAULT NULL,
+    `title` varchar(50) DEFAULT NULL,
+    `status` int(11) DEFAULT NULL COMMENT '0-正常; 1-删除;',
+    `create_time` timestamp NULL DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    KEY `index_user_id` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 
 

@@ -1,40 +1,122 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <link rel="stylesheet" th:href="/css/header.css">
-    <link rel="stylesheet" th:href="/css/footer.css">
-    <link rel="stylesheet" th:href="/css/index.css">
-    <title>菜鸟论坛-首页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <title>菜鸟社区</title>
 </head>
 <body>
     <div class="Header" th:fragment="header">
-        <a class="HeaderPart">
+        <img class="HeaderLogo" th:src="@{/img/logo.png}">
+        <div class="Space"></div>
+        <a class="HeaderPart" th:href="@{/index}">
             首页
         </a>
         <a class="HeaderPart">
-            论坛
+            资源
         </a>
-        <a class="HeaderPart">
-            博客
+        <a class="HeaderPart" th:href="@{/blog/editor}">
+            写文章
         </a>
-        <div class="Space"></div>
-        <div class="HeaderInput input-group">
-            <input type="text" class="form-control">
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="button">搜索</button>
-            </span>
+        <a th:href="@{/register}" class="HeaderPart">
+            注册
+        </a>
+        <a th:href="@{/login}" class="HeaderPart">
+            登录
+        </a>
+        <div class="HeaderPart dropdown">
+            <button class="HeaderPartDown btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                我的
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a th:href="@{/user/console}">个人中心</a></li>
+                <li><a th:href="@{/logout}">退出</a></li>
+            </ul>
         </div>
-        <button class="HeaderButton btn btn-default">注册</button>
-        <button class="HeaderButton btn btn-default">登录</button>
     </div>
     <div class="Main">
-        
+        <div class="MainContent">
+            <div class="MainTitle">
+                <img th:src="@{/img/star.svg}" style="margin-right: 1em;">推荐文章
+            </div>
+            <div class="MainArticle" th:each="obj:${blogs}">
+                <img th:src="@{|/img/${obj.blog.catgoryId}.jpg|}" class="MainArticleImg">
+                <div class="MainArticleInfo">
+                    <a class="MainArticleInfoTitle" th:href="@{|/blog/detail/${obj.blog.id}|}" th:text="${obj.blog.title}">
+                        射手的自我修养
+                    </a>
+                    <div class="MainArticleInfoGroup">
+                        <div class="MainArticleInfoGroupPart" th:text="${#dates.format(obj.blog.createTime,'yyyy-MM-dd HH:mm:ss')}">
+                            <img th:src="@{/img/time.svg}" style="margin-right: 0.25em;">
+                            2020-02-02 11:11:11
+                        </div>                        
+                        <div class="MainArticleInfoGroupPart">
+                            <img th:src="@{/img/person.svg}" style="margin-right: 0.25em;">
+                            <a class="MainArticleInfoGroupPartLink" th:href="@{|/${obj.user.id}|}" th:text="${obj.user.name}">老王</a>
+                        </div>
+                        <div class="MainArticleInfoGroupPart">
+                            <img th:src="@{/img/read.svg}" style="margin-right: 0.25em;">
+                            1
+                        </div>
+                        <div class="MainArticleInfoGroupPart">
+                            <img th:src="@{/img/favorite.svg}" style="margin-right: 0.25em;">
+                            <img th:src="@{/img/favorite_border.svg}" style="margin-right: 0.25em;">
+                            1
+                        </div>
+                        <div class="MainArticleInfoGroupPart">
+                            <img th:src="@{/img/tag.svg}" style="margin-right: 0.25em;">
+                            <a class="MainArticleInfoGroupPartLink" th:href="@{|/category/${obj.catgory.id}|}" th:text="${obj.catgory.name}">技术</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-2 MainContentPage" th:if="${pageVo.rows>0}" th:fragment="pagination">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{${pageVo.path}(current=1)}">首页</a>
+                    </li>
+                    <li th:class="|page-item ${pageVo.current==1?'disabled':''}|">
+                        <a class="page-link" th:href="@{${pageVo.path}(current=${pageVo.current-1})}">上一页</a></li>
+                    <li th:class="|page-item ${i==pageVo.current?'active':''}|" th:each="i:${#numbers.sequence(pageVo.from,pageVo.to)}">
+                        <a class="page-link" th:href="@{${pageVo.path}(current=${i})}" th:text="${i}">1</a>
+                    </li>
+                    <li th:class="|page-item ${pageVo.current==pageVo.total?'disabled':''}|">
+                        <a class="page-link" th:href="@{${pageVo.path}(current=${pageVo.current+1})}">下一页</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{${pageVo.path}(current=${pageVo.total})}">末页</a>
+                    </li>
+                    </ul>
+            </div>
+        </div>
+        <div class="MainRight" th:fragment="category">
+            <div class="MainSearch">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="搜索文章">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><img th:src="@{/img/search.svg}"></button>
+                    </span>
+                </div>
+            </div>
+            <div class="MainTag">
+                <div class="MainTagTitle">
+                    <img th:src="@{/img/tag.svg}" style="margin-right: 0.25em;">
+                    分类
+                </div>
+                <div class="MainTagContent">
+                    <a class="MainTagContentSpan" th:each="cat:${categories}" th:href="@{|/category/${cat.id}|}" th:text="${cat.name}">
+                    前端
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="Footer">
-
-    </div>
+    <script th:src="@{/lib/jquery/jquery.js}"></script>
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
 </body>
+
 </html>

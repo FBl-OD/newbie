@@ -13,7 +13,7 @@ public class Catgory {
     //状态：0-正常，1-删除
     Integer status;
 
-    Date creatTime;
+    Date createTime;
 
     public Integer getId() {
         return id;
@@ -47,12 +47,12 @@ public class Catgory {
         this.status = status;
     }
 
-    public Date getCreatTime() {
-        return creatTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatTime(Date creatTime) {
-        this.creatTime = creatTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class Catgory {
                 ", userId=" + userId +
                 ", name='" + name + '\'' +
                 ", status=" + status +
-                ", creatTime=" + creatTime +
+                ", createTime=" + createTime +
                 '}';
     }
 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.newbie.community.dao.ResourceDao">
+    <sql id="selectFields">
+        id,user_id,title,status,create_time
+    </sql>
+    <select id="selectById" resultType="Resource">
+        select <include refid="selectFields"></include>
+        from file
+        where id=#{id}
+        and status!=1;
+    </select>
+    <select id="selectAll" resultType="Resource">
+        select <include refid="selectFields"></include>
+        from file
+        where status!=1
+        <if test="userId!=0">
+            and user_id=#{userId}
+        </if>
+        order by create_time desc
+        limit #{offset},#{limit}
+    </select>
+    <select id="selectCount" resultType="int">
+        select count(*) from file
+        where status!=1
+        <if test="userId!=1">
+            and user_id=#{userId}
+        </if>
+    </select>
+    <insert id="insert" parameterType="Resource" keyProperty="id">
+        insert into file(user_id,title,status,create_time)
+        values(#{userId},#{title},#{status},#{createTime})
+    </insert>
+    <update id="updateStatus">
+        update file
+        set status=#{status}
+        where id=#{id}
+    </update>
+</mapper>

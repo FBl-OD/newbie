@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/blog-detail.css}">
+    <title th:text="|${blog.title}_${user.name}_菜鸟社区|"></title>
+</head>
+
+<body>
+    <div th:replace="index::header">
+    </div>
+    <div class="Main">
+        <div class="MainContent">
+            <div th:text="${blog.title}" class="MainTitle">
+                大王叫我来巡山
+            </div>
+            <div class="MainInfo">
+                <div class="MainInfoPart">
+                    <a class="MainInfoPartLink" th:href="@{|/${user.id}|}" th:text="${user.name}">老王</a>
+                </div>
+                <span>发布于：</span>
+                <div th:text="${#dates.format(blog.createTime,'yyyy-MM-dd HH:mm:ss')}" class="MainInfoPart">
+                    2020-02-02 11:11:11
+                </div>
+                <div class="MainInfoPart">
+                    <img th:src="@{/img/favorite.svg}" style="margin-right: 0.25em;">
+                    <img th:src="@{/img/favorite_border.svg}" style="margin-right: 0.25em;">
+                    1                    
+                </div>
+                <div class="MainInfoPart">
+                    <img th:src="@{/img/read.svg}" style="margin-right: 0.25em;">
+                    1                
+                </div>
+            </div>
+            <div th:utext="${blog.html}" class="MainText">
+                11111111111111
+            </div>
+        </div>
+        <div class="MainRight">
+            <div class="MainUser">
+                <img class="MainUserImg" th:src="@{${user.headerUrl}}">
+                <a th:text="${user.name}" class="MainUserName">老王</a>
+                <div class="MainUserInfo">
+                    <div style="border-right: 1px black solid;" class="MainUserInfoPart">
+                        <div th:text="${articles}">2</div>
+                        文章
+                    </div>
+                    <div style="border-right: 1px black solid;" class="MainUserInfoPart">
+                        <div>2</div>
+                        阅读
+                    </div>
+                    <div class="MainUserInfoPart">
+                        <div>2</div>
+                        获赞
+                    </div>
+                </div>
+            </div>
+
+            <div class="MainCategory">
+                <div class="MainCategoryTitle">
+                    <img th:src="@{/img/tag.svg}" style="margin-right: 0.25em;">
+                    Ta写过的分类
+                </div>
+                <div class="MainCategoryContent">
+                    <div class="MainCategoryContentPart" th:each="cat:${categories}">
+                        <span th:text="${cat.category.name}">前端</span><span th:text="${cat.count}">3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
