@@ -18,4 +18,8 @@ public interface UserDao {
     int insert(User user);
 
     int updateStatus(@Param("id") int id, @Param("status") int status);
+
+    void deleteUserById(int id);
+
+    int isNullByName(String name);
 }

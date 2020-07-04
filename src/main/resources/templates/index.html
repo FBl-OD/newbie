@@ -20,10 +20,11 @@
         <a class="HeaderPart" th:href="@{/blog/editor}">
             写文章
         </a>
-        <a th:href="@{/register}" class="HeaderPart">
+        <!--th:if="${loginUser!=null}"-->
+        <a th:href="@{/register}" th:if="${loginUser!=null}" class="HeaderPart">
             注册
         </a>
-        <a th:href="@{/login}" class="HeaderPart">
+        <a th:href="@{/login}" th:if="${loginUser!=null}" class="HeaderPart">
             登录
         </a>
         <div class="HeaderPart dropdown">
