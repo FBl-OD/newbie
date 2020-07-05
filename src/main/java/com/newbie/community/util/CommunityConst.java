@@ -18,5 +18,7 @@ public interface CommunityConst {
 
     String REDIS_PREFIX_VIEW="view";
 
+    String REDIS_PREFIX_TICKET="ticket";
+
     int BLOG_TYPE=1;
 }

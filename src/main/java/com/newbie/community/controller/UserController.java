@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class UserController {
     @RequestMapping(path = "/user/console/{id}",method = RequestMethod.GET)
     public String getUserConsolePage(@PathVariable("id")int id){
-
-
-
         return "site/user-console";
     }
 }

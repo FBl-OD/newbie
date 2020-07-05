@@ -18,4 +18,5 @@ public interface UserDao {
     int insert(User user);
 
     int updateStatus(@Param("id") int id, @Param("status") int status);
+
 }

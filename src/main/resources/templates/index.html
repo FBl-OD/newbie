@@ -20,13 +20,13 @@
         <a class="HeaderPart" th:href="@{/blog/editor}">
             写文章
         </a>
-        <a th:href="@{/register}" class="HeaderPart">
+        <a th:if="${loginUser==null}" th:href="@{/register}" class="HeaderPart">
             注册
         </a>
-        <a th:href="@{/login}" class="HeaderPart">
+        <a th:if="${loginUser==null}"th:href="@{/login}" class="HeaderPart">
             登录
         </a>
-        <div class="HeaderPart dropdown">
+        <div class="HeaderPart dropdown" th:if="${loginUser!=null}">
             <button class="HeaderPartDown btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 我的
                 <span class="caret"></span>
