@@ -4,6 +4,7 @@ import com.newbie.community.entity.Resource;
 
 import java.util.List;
 
+@Deprecated
 public interface FileService {
 
     Resource queryById(int id);

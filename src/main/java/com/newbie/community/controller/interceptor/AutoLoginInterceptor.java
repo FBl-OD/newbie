@@ -1,7 +1,9 @@
 package com.newbie.community.controller.interceptor;
 
 import com.newbie.community.entity.User;
+import com.newbie.community.service.UserService;
 import com.newbie.community.service.impl.UserServiceImpl;
+import com.newbie.community.util.CommunityConst;
 import com.newbie.community.util.CookieUtil;
 import com.newbie.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Component
-public class AutoLoginInterceptor implements HandlerInterceptor {
+public class AutoLoginInterceptor implements HandlerInterceptor, CommunityConst {
 
     @Autowired
-    private UserServiceImpl userServiceImpl;
+    private UserService userServiceImpl;
 
     @Autowired
     private HostHolder hostHolder;
@@ -28,11 +30,14 @@ public class AutoLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //从cookie中获取凭证
+        System.out.println("---拦截"+request.getRequestURL()+"---");
         if(CookieUtil.hasKey(request,"username")) {
             String username = CookieUtil.getValue(request, "username");
-            String ticket = CookieUtil.getValue(request, username);
-            if (redisTemplate.hasKey(username)) {
-                if (redisTemplate.opsForValue().get(username).equals(ticket)) {
+            String ticket = CookieUtil.getValue(request,"ticket");
+            if (redisTemplate.hasKey(REDIS_PREFIX_TICKET+REDIS_SPLIT+username)) {
+                System.out.println("cookie ticket:"+ticket);
+                System.out.println("redis ticket:"+redisTemplate.opsForValue().get(REDIS_PREFIX_TICKET+REDIS_SPLIT+username));
+                if (redisTemplate.opsForValue().get(REDIS_PREFIX_TICKET+REDIS_SPLIT+username).equals(ticket)) {
                     User user = userServiceImpl.queryByName(username);
                     hostHolder.setUser(user);
                 }

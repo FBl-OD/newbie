@@ -25,13 +25,12 @@
                     2020-02-02 11:11:11
                 </div>
                 <div class="MainInfoPart">
-                    <img th:src="@{/img/favorite.svg}" style="margin-right: 0.25em;">
-                    <img th:src="@{/img/favorite_border.svg}" style="margin-right: 0.25em;">
-                    1                    
+                    <img th:onclick="|like(this,${blog.id});|" th:status="${liked}"  th:src="@{${liked?'/img/favorite.svg':'/img/favorite_border.svg'}}" style="margin-right: 0.25em;cursor: pointer;">
+                    <span th:text="${likes}">1</span>
                 </div>
                 <div class="MainInfoPart">
                     <img th:src="@{/img/read.svg}" style="margin-right: 0.25em;">
-                    1                
+                    <span th:text="${views}"></span>
                 </div>
             </div>
             <div th:utext="${blog.html}" class="MainText">
@@ -71,6 +70,8 @@
             </div>
         </div>
     </div>
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/blog-detail.js}"></script>
 </body>
 
 </html>

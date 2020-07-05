@@ -31,12 +31,11 @@
                     </div>
                     <div class="MainArticleInfoGroupPart">
                         <img th:src="@{/img/read.svg}" style="margin-right: 0.25em;">
-                        1
+                        <span th:text="${obj.views}"></span>
                     </div>
                     <div class="MainArticleInfoGroupPart">
-                        <img th:src="@{/img/favorite.svg}" style="margin-right: 0.25em;">
                         <img th:src="@{/img/favorite_border.svg}" style="margin-right: 0.25em;">
-                        1
+                        <span th:text="${obj.likes}">1</span>
                     </div>
                     <div class="MainArticleInfoGroupPart">
                         <img th:src="@{/img/tag.svg}" style="margin-right: 0.25em;">

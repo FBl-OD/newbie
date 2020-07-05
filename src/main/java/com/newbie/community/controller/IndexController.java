@@ -4,15 +4,16 @@ import com.newbie.community.Vo.PageVo;
 import com.newbie.community.entity.Blog;
 import com.newbie.community.entity.Catgory;
 import com.newbie.community.entity.User;
-import com.newbie.community.service.BlogService;
-import com.newbie.community.service.CatgoryService;
-import com.newbie.community.service.UserService;
-import com.newbie.community.service.impl.UserServiceImpl;
+import com.newbie.community.service.*;
+import com.newbie.community.util.CommunityConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class IndexController {
+public class IndexController implements CommunityConst {
 
     @Autowired
     private BlogService blogService;
@@ -33,6 +34,12 @@ public class IndexController {
 
     @Autowired
     private CatgoryService catgoryService;
+
+    @Autowired
+    private LikeService likeService;
+
+    @Autowired
+    private ViewService viewService;
 
     @Value("server.servlet.context-path")
     private String contextPath;
@@ -53,6 +60,10 @@ public class IndexController {
             map.put("user",user);
             Catgory catgory = catgoryService.queryById(blog.getCatgoryId());
             map.put("catgory",catgory);
+            long likes = likeService.numOfLike(BLOG_TYPE, blog.getId());
+            map.put("likes",likes);
+            long views = viewService.views(blog.getId());
+            map.put("views",views);
             list.add(map);
         }
         model.addAttribute("blogs",list);
@@ -60,12 +71,7 @@ public class IndexController {
         model.addAttribute("categories",catgories);
         return "index";
     }
-/*
-    @RequestMapping(path = "/sendConfirmCode", method = RequestMethod.GET)
-    public void sendConfirmCode(HttpServletResponse response, @RequestParam("email") String email) {
-        Map<String, Object> map = userService.sendConfirmCode(email);
-    }
-*/
+
     @RequestMapping(path = "/login",method = RequestMethod.GET)
     public String getLoginPage(){
         return "/site/login";
@@ -88,7 +94,7 @@ public class IndexController {
             Map<String, Object> map = userService.register(user, confirmCode);
             System.out.println(map);
             if (map == null || map.isEmpty()) {
-                return "index";
+                return "/site/login";
             } else {
                 model.addAttribute("usernameMsg", map.get("usernameMsg"));
                 model.addAttribute("passwordMsg", map.get("passwordMsg"));
@@ -107,12 +113,12 @@ public class IndexController {
         if (map.containsKey("ticket")) {
             Cookie cookie1 = new Cookie("ticket", map.get("ticket").toString());
             cookie1.setPath(contextPath);
-            cookie1.setMaxAge(60 * 60 * 24 * 30);
+            cookie1.setMaxAge(60 * 60 * 24);
             response.addCookie(cookie1);
 
             Cookie cookie2 = new Cookie("username", map.get("username").toString());
             cookie2.setPath(contextPath);
-            cookie2.setMaxAge(60 * 60 * 24 * 30);
+            cookie2.setMaxAge(60 * 60 * 24);
             response.addCookie(cookie2);
 
             return "redirect:/index";
@@ -126,7 +132,7 @@ public class IndexController {
 
     @RequestMapping(path = "/logout", method = RequestMethod.GET)
     public String logout(@CookieValue("username") String username){
-        userService.logout(username);
+        userService.logout(REDIS_PREFIX_TICKET+REDIS_SPLIT+username);
         return "redirect:/index";
     }
 }

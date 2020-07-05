@@ -3,6 +3,7 @@ package com.newbie.community.service.impl;
 import com.newbie.community.dao.UserDao;
 import com.newbie.community.entity.User;
 import com.newbie.community.service.UserService;
+import com.newbie.community.util.CommunityConst;
 import com.newbie.community.util.CommunityUtil;
 import com.newbie.community.util.MailClient;
 import com.newbie.community.util.UserIconCreater;
@@ -21,7 +22,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, CommunityConst {
     @Autowired
     private UserDao userDao;
 
@@ -33,12 +34,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RedisTemplate redisTemplate;
-
-    @Value("${server.port}")
-    private String domain;
-
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
 
     @Override
     public User queryById(int id) {
@@ -53,17 +48,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User queryByEmail(String email) {
         return userDao.selectByEmail(email);
-    }
-
-    @Override
-    public boolean deleteById(int id){
-        redisTemplate.opsForValue().decrement(userDao.selectById(id).getName());
-        userDao.deleteUserById(id);
-        if (redisTemplate.hasKey(userDao.selectById(id).getName()) ||
-                userDao.isNullByName(userDao.selectById(id).getName()) == 1) {
-            return false;
-        }
-        return true;
     }
 
     @Override
@@ -185,12 +169,11 @@ public class UserServiceImpl implements UserService {
         }
 
         //验证账号
-        int isNull = userDao.isNullByName(username);
-        if(isNull == 0){
+        User user = userDao.selectByName(username);
+        if(user.getId() == 0){
             map.put("usernameMsg","该账号不存在");
             return map;
         }
-        User user = userDao.selectByName(username);
         if(user.getStatus() == 1){
             map.put("usernameMsg", "该账号未激活");
             return map;
@@ -205,11 +188,12 @@ public class UserServiceImpl implements UserService {
             return map;
         }
 
+        System.out.println(user.getId()+"------");
 
         //生成登陆凭证
-        if(!redisTemplate.hasKey(user.getId())) {
+        if(!redisTemplate.hasKey(REDIS_PREFIX_TICKET+REDIS_SPLIT+user.getName())){
             String ticket = CommunityUtil.generateUUID();
-            redisTemplate.opsForValue().set(user.getName(), ticket, 30, TimeUnit.DAYS);
+            redisTemplate.opsForValue().set(REDIS_PREFIX_TICKET+REDIS_SPLIT+user.getName(), ticket, 1, TimeUnit.DAYS);
             map.put("ticket",ticket);
             map.put("username",username);
         }

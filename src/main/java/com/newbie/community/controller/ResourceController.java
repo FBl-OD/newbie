@@ -22,7 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-@Controller
+@Deprecated
 public class ResourceController implements CommunityConst {
 
     private static final Logger logger= LoggerFactory.getLogger(ResourceController.class);

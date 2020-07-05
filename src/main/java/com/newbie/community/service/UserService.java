@@ -2,7 +2,6 @@ package com.newbie.community.service;
 
 import com.newbie.community.entity.User;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.ui.Model;
 
 import java.util.Map;
 
@@ -17,8 +16,6 @@ public interface UserService {
     int add(User user);
 
     int updateStatus(@Param("id") int id, @Param("status") int status);
-
-    public boolean deleteById(int id);
 
     public Map<String, Object> sendConfirmCode(String email);
 

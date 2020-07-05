@@ -4,9 +4,8 @@ import com.newbie.community.Vo.PageVo;
 import com.newbie.community.entity.Blog;
 import com.newbie.community.entity.Catgory;
 import com.newbie.community.entity.User;
-import com.newbie.community.service.BlogService;
-import com.newbie.community.service.CatgoryService;
-import com.newbie.community.service.UserService;
+import com.newbie.community.service.*;
+import com.newbie.community.util.CommunityConst;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-public class CategoryController {
+public class CategoryController implements CommunityConst {
 
     @Autowired
     private BlogService blogService;
@@ -30,6 +29,12 @@ public class CategoryController {
 
     @Autowired
     private CatgoryService catgoryService;
+
+    @Autowired
+    private LikeService likeService;
+
+    @Autowired
+    private ViewService viewService;
 
     @RequestMapping(path = "/category/{id}",method = RequestMethod.GET)
     public String getCategoryPage(@PathVariable("id") int id, Model model, PageVo pageVo){
@@ -45,6 +50,10 @@ public class CategoryController {
             map.put("catgory",catgory);
             map.put("blog",blog);
             map.put("user",user);
+            long likes = likeService.numOfLike(BLOG_TYPE, blog.getId());
+            map.put("likes",likes);
+            long views = viewService.views(blog.getId());
+            map.put("views",views);
             list.add(map);
         }
         model.addAttribute("blogs",list);
